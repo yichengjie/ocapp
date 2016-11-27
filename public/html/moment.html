@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <input id="txt_CopyLink" type="text" value="hello">
+
+</head>
+<body>
+
+<script type="text/javascript" src="../components/moment/moment.js"></script>
+<script type="text/javascript" src="../components/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+    var _getDeleteButton = function(effDateStr){
+        var dateFormatStr ="YYYY/MM/DD"  ;
+        var curDateStr =moment().format(dateFormatStr) ;
+        var currentDate = moment(curDateStr,dateFormatStr) ;
+        var effDate = moment(effDateStr,dateFormatStr) ;
+        if(currentDate>=effDate){
+            console.info('当前日期大于生效日期!') ;
+        }else{
+            console.info('当前日期小于生效日期') ;
+        }
+    }
+    //_getDeleteButton('2016/03/29') ;
+</script>
+</body>
+</html>

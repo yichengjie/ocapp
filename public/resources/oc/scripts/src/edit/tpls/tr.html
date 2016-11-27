@@ -1,0 +1,228 @@
+<tr ng-repeat = "l in list"   ng-click = "clickTr(l);" ng-class = "{true:'selectTd',false:''}[l.selected]">
+<%if("tb183.html"==value){%>
+	<td>
+		<input  name="{{'t1831'+$index}}" ng-model = "l.travelAgency" style="width:90%;"
+			maxLength = "1" type="text" ng-disabled="!editStatus.list183VO"  upper-input />
+	</td>
+	<td>
+		<input name="{{'t1832'+$index}}"  ng-model = "l.carrierGds" style="width:90%;"
+			maxLength = "3" ng-disabled="!editStatus.list183VO"  type="text"  />
+	</td>
+	<td>
+		<input name="{{'t1833'+$index}}"  ng-model = "l.dutyFunctionCode"  style="width:90%;"
+			maxLength = "2" ng-disabled="!editStatus.list183VO"  type="text"  />
+	</td>
+	<td>
+		<select  ng-model="l.geographicSpecificationType" style="width:90%;"  ng-change="selectChange183Tb1(l)"
+			ng-disabled="!editStatus.list183VO" ng-options="c.value as c.name for c in geoSpecTypeList" >
+		</select>
+	</td>
+	<td>
+		<input name="{{'t1835'+$index}}" style="width:90%;" ng-model = "l.geographicSpecification" ng-disabled="!editStatus.list183VO"  
+			upper-input="" geo-max-length = "l.geographicSpecificationType"  type="text" class ="required"
+			ng-class = "{'A':'areacode','C':'citycode','N':'countrycode','P':'airportcode','S':'statecode','Z':'zonecode'}[l.geographicSpecificationType]" />
+	</td>
+	<td>
+		<select ng-model="l.codeType" style="width:90%;" ng-disabled="!editStatus.list183VO" 
+				ng-options="d.value as d.name for d in codeTypeList" ng-change="selectChange183Tb2(l)">
+		</select>
+	</td>
+	<td>
+		<input name="{{'t1836'+$index}}"  style="width:90%;" ng-model = "l.code" upper-input  ng-disabled="!editStatus.list183VO" type="text" 
+			   ng-class = "{'T':'required office','I':'required iatanum'}[l.codeType]"
+			   tui-max-length = "{'T':'6','I':'8','X':'8','V':'8','E':'8','L':'8','A':'8'}[l.codeType]" />
+	</td>
+	<td>
+		<select ng-model="l.viewBookTkt"style="width:95%;"  ng-disabled="!editStatus.list183VO" 
+				ng-options="d.value as d.name for d in viewBookTktList">
+		</select>
+	</td>
+<%}else if("tb171.html"==value){%>
+	<td>
+		<input name="{{'t1711'+$index}}" ng-model = "l.carrier"  ng-disabled="!editStatus.list171VO"  upper-input="" 
+			set-focus="" class = "air required" type = "text" tabindex="1" maxlength="2"  size = "16" />
+	</td>
+	<td>
+		<input  ng-model = "l.resFareClassCode"  ng-disabled="!editStatus.list171VO" 
+			type = "text" tabindex="1" maxlength="16"  size = "16" />
+	</td>
+	<td >
+		<input  ng-model = "l.fareTypeCode"  ng-disabled="!editStatus.list171VO" 
+				type = "text" tabindex="1" maxlength="3"  size = "16" />
+	</td>
+<%}else if ("tb172.html"==value){%>
+	<td>
+		<input  ng-model = "l.accountCode"  ng-disabled="!editStatus.list172VO"  type = "text" 
+			tabindex="1" maxlength="20"  size = "16" />
+	</td>
+<%}else if ("tb173Ticket.html"==value){%>
+	<td>
+		<input  ng-model = "l.ticketDesignator"  ng-disabled="!editStatus.list173TicketVO"  type = "text" 
+				tabindex="1" maxlength="10"  size = "16" />
+	</td>
+<%}else if ("tb173Tkt.html"==value){%>
+	<td>
+		<input  ng-model = "l.ticketDesignator"  ng-disabled="!editStatus.list173TktVO" type = "text" tabindex="1"
+			 maxlength="10"  size = "16" />
+	</td>
+<%}else if ("tb165.html"==value){%>
+	<td>
+		<input name="{{'t1651'+$index}}" ng-model = "l.equipmentCode"  ng-disabled="!editStatus.list165VO"  
+			upper-input="" class = "lettersOrNumber" maxLength = "3" type = "text" size = "16"  />
+	</td>
+<%}else if("tb186.html"==value){%>
+	<td>
+		<input name="{{'t1861'+$index}}" ng-model = "l.mktCarrier" ng-disabled="!editStatus.list186VO" set-focus  
+			type="text" maxLength = "3" tabindex="3" size="5" class="required" />
+	</td>
+	<td>
+		<input ng-model = "l.optCarrier" maxLength ="3" ng-disabled="!editStatus.list186VO"  
+			type="text" tabindex="3" size="5" />
+	</td>
+	<td>
+		<input name="{{'t1863'+$index}}" ng-model = "l.fltNo1" maxLength = "4" 
+			ng-disabled="!editStatus.list186VO" type="text" tabindex="3" size="5" class="required"  />-
+		<input ng-model = "l.fltNo2" maxLength ="4" ng-disabled="!editStatus.list186VO"  type="text" 
+			tabindex="3" size="5"  />
+</td>
+<%}else if ("tb196.html"==value){%>
+	<td>
+		<input name="{{'t1961'+$index}}" ng-model = "l.count"  ng-disabled="!editStatus.list196VO" 
+			   maxLength = "2"  type="text" tabindex="3" size="15" class="positiveInteger"/>
+	</td>
+	<td>
+		<input name="{{'t1962'+$index}}" ng-model = "l.code"  upper-input set-focus  maxLength = "3"  type="text"
+			ng-disabled="!editStatus.list196VO"  tabindex="3" size="15"  class="lettersOrNumber" />
+	</td>
+<%}else if ("tb198.html"==value){%>
+	<td>
+		<select ng-model="l.mktOp" ng-disabled="!editStatus.list198VO"  style="width:120px;"
+			ng-change = "selectChange198Tb(l)" ng-options="b.value as b.name for b in marketingOpreratingList" >
+		</select>  
+	</td>
+	<td>
+		<input name="{{'t1982'+$index}}" ng-model = "l.cxr" upper-input ng-disabled="!editStatus.list198VO"  maxLength = "2"  typ 
+		   ng-class = "{true:'air required',false:''}[l.mktOp.length>0]"  tabindex="3" size="5" class="input_normal"/>
+	</td>
+	<td>
+		<input name="{{'t1983'+$index}}" ng-model = "l.rbd1" upper-input ng-disabled="!editStatus.list198VO"  maxLength = "1" 
+		   type="text" tabindex="3" ng-class = "{true:'seatcode required',false:''}[l.mktOp.length>0]"  size="3" />
+	</td>
+	<td>
+		<input name="{{'t1983'+$index}}" ng-model = "l.rbd2" upper-input ng-disabled="!editStatus.list198VO"  maxLength = "1"  
+			tabindex="3" ng-class = "{true:'seatcode',false:''}[l.mktOp.length>0]" type="text"size="3" />
+	</td>
+	<td>
+		<input name="{{'t1984'+$index}}" ng-model = "l.rbd3"  upper-input ng-disabled="!editStatus.list198VO" maxLength = "1"  
+			tabindex="3" size="3" ng-class = "{true:'seatcode',false:''}[l.mktOp.length>0]" type="text"  />
+	</td>
+	<td>
+		<input name="{{'t1985'+$index}}" ng-model = "l.rbd4"  upper-input ng-disabled="!editStatus.list198VO" 
+			maxLength = "1"  tabindex="3" size="3" ng-class = "{true:'seatcode',false:''}[l.mktOp.length>0]" type="text"  />
+	</td>
+	<td>
+		<input name="{{'t1986'+$index}}" ng-model = "l.rbd5" upper-input  ng-disabled="!editStatus.list198VO" maxLength = "1"  
+			tabindex="3" size="3" ng-class = "{true:'seatcode',false:''}[l.mktOp.length>0]" type="text"  />
+	</td>
+<%}else if("tb198UpGrade.html"==value){%>
+	<td ng-if = "data.sel1.value=='UP'||data.sel1.value=='BDUP'">
+		<select ng-change="selectChange198TbUpGrade(l)" ng-model="l.mktOp" ng-disabled="!editStatus.list198UpgradeVO"  style="width:120px;"
+			 ng-options="b.value as b.name for b in marketingOpreratingList" >
+		</select>  
+	</td>
+	<td ng-if = "data.sel1.value=='UP'||data.sel1.value=='BDUP'">
+		<input name ="{{'t198ug1'+$index}}" ng-model = "l.cxr" upper-input ng-disabled="!editStatus.list198UpgradeVO" 
+			   class="air" maxLength="2"  type="text" tabindex="3" size="5" />
+	</td>
+	<td>
+		<input name ="{{'t198ug2'+$index}}" ng-model = "l.rbd1" upper-input set-focus ng-disabled="!editStatus.list198UpgradeVO" 
+			class="required seatcode" maxLength="1"  type="text" tabindex="3" size="7"  />
+	</td>
+	<td>
+		<input name ="{{'t198ug3'+$index}}" ng-model = "l.rbd2" upper-input ng-disabled="!editStatus.list198UpgradeVO"  
+			class="seatcode" maxLength="1" type="text" tabindex="3" size="7" />
+	</td>
+	<td>
+		<input name ="{{'t198ug4'+$index}}" ng-model = "l.rbd3" upper-input  ng-disabled="!editStatus.list198UpgradeVO"  
+			class="seatcode" maxLength="1" type="text" tabindex="3" size="7" />
+	</td>
+	<td>
+		<input name ="{{'t198ug5'+$index}}" ng-model = "l.rbd4" upper-input ng-disabled="!editStatus.list198UpgradeVO"  
+			class="seatcode" maxLength="1" type="text" tabindex="3" size="7" />
+	</td>
+	<td>
+		<input name ="{{'t198ug6'+$index}}" ng-model = "l.rbd5" upper-input ng-disabled="!editStatus.list198UpgradeVO"  
+			class="seatcode" maxLength="1" type="text" tabindex="3" size="7"  />
+	</td>
+<%}else if ("tb170.html"==value){%>
+	<td>
+		<select ng-model="l.saleGeographicPointType"  ng-disabled="!editStatus.list170VO" style="width:60px;"
+				ng-options="o.value as o.name for o in geoSpecTypeList" ng-change="selectChange170Tb(l)">
+		</select>
+	</td>
+	<td>
+		<input name = "{{'t1701'+$index}}"  ng-model = "l.saleGeographicPoint" ng-disabled="!editStatus.list170VO" 
+			   upper-input geo-max-length = "l.saleGeographicPointType" 
+			   ng-class = "{'A':'required areacode','C':'required citycode','N':'required countrycode','P':'required airportcode','S':'required statecode','Z':'required zonecode'}[l.saleGeographicPointType]"
+			   type = "text" size = "16"  />
+	</td>
+	<td >
+		<input  name="{{'t1702'+$index}}" ng-model = "l.specFeeAmount" class = "required nonNegativeInteger"  set-focus="" type = "text" 
+			ng-disabled="!editStatus.list170VO" tabindex="1" maxlength="7"  size = "16" />
+	</td>
+	<td>
+		<input name = "{{'t1703'+$index}}" ng-model = "l.specFeeCurrency" upper-input  type = "text" 
+			size = "16" maxlength="3"  ng-disabled="!editStatus.list170VO" class = "letter" 
+			ng-class = "{true:'required',false:''}[l.saleGeographicPointType.length>0]" />
+	</td>
+<%}else if("tb178geo1.html"==value){%>
+	<td>
+		<select ng-model="l.geoLocType" ng-disabled="!editStatus.list178Loc1"  class = "select_width" style="width:100px;"
+			ng-options="b.value as b.name for b in geoSpecTypeList" ng-change="selectChange178Tb(l)" >
+		</select>  
+	</td>
+	<td>
+		<input name="{{'t17812'+$index}}" ng-model = "l.geoLocSpec" geo-max-length = "l.geoLocType" upper-input  
+			ng-disabled="!editStatus.list178Loc1" type="text" tabindex="3" size="5" class="input_normal"
+			ng-class = "{'A':'required areacode','C':'required citycode','N':'required countrycode','P':'required airportcode','S':'required statecode','Z':'required zonecode'}[l.geoLocType]" />
+	</td>
+	<td>
+		   <input ng-model = "l.appl" ng-disabled="!editStatus.list178Loc1"  type="radio" tabindex="3" size="5" value="" />适用
+		   <input ng-model = "l.appl" ng-disabled="!editStatus.list178Loc1"  type="radio" tabindex="3" size="5" value="N" />不适用
+	</td>
+<%}else if("tb178geo2.html"==value){%>
+	<td>
+		<select ng-model="l.geoLocType" ng-disabled="!editStatus.list178Loc2"  class = "select_width" style="width:100px;"
+			ng-options="b.value as b.name for b in geoSpecTypeList" ng-change="selectChange178Tb(l)" >
+		</select>  
+	</td>
+	<td>
+		<input name="{{'t17822'+$index}}" ng-model = "l.geoLocSpec" geo-max-length = "l.geoLocType" upper-input  
+			ng-disabled="!editStatus.list178Loc2" type="text" tabindex="3" size="5" class="input_normal"
+			ng-class = "{'A':'required areacode','C':'required citycode','N':'required countrycode','P':'required airportcode','S':'required statecode','Z':'required zonecode'}[l.geoLocType]" />
+	</td>
+	<td>
+		   <input ng-model = "l.appl" ng-disabled="!editStatus.list178Loc2"  type="radio" tabindex="3" size="5" value="" />适用
+		   <input ng-model = "l.appl" ng-disabled="!editStatus.list178Loc2"  type="radio" tabindex="3" size="5" value="N" />不适用
+	</td>
+<%}else if("tb178geo3.html"==value){%>
+	<td>
+		<select ng-model="l.geoLocType" ng-disabled="!editStatus.list178Loc3"  class = "select_width" style="width:100px;"
+			ng-options="b.value as b.name for b in geoSpecTypeList" ng-change="selectChange178Tb(l)" >
+		</select>  
+	</td>
+	<td>
+		<input name="{{'t17832'+$index}}" ng-model = "l.geoLocSpec" geo-max-length = "l.geoLocType" upper-input  
+			ng-disabled="!editStatus.list178Loc3" type="text" tabindex="3" size="5" class="input_normal"
+			ng-class = "{'A':'required areacode','C':'required citycode','N':'required countrycode','P':'required airportcode','S':'required statecode','Z':'required zonecode'}[l.geoLocType]" />
+	</td>
+	<td>
+		   <input ng-model = "l.appl" ng-disabled="!editStatus.list178Loc3"  type="radio" tabindex="3" size="5" value="" />适用
+		   <input ng-model = "l.appl" ng-disabled="!editStatus.list178Loc3"  type="radio" tabindex="3" size="5" value="N" />不适用
+	</td>
+<%}else{%>
+	<td colspan="{{column}}">
+		<h3>你传入的html模板不存在，请检查</h3>
+	</td>
+<%}%>
+</tr>

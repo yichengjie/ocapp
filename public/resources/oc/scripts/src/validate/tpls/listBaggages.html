@@ -1,0 +1,48 @@
+<div class = "table_layout" style="width:517px;" ng-show="showHideStatus.listBaggages">
+    <table>
+        <thead>
+        <tr>
+            <th>行李重量</th>
+            <th>重量单位</th>
+            <th>行李尺寸</th>
+            <th>尺寸单位</th>
+            <th>行李子代码</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--[weight,weightUnit,size,sizeUnit,subCode]-->
+        <tr ng-repeat="l in list" ng-click="selectTr($event)">
+            <td><input type="text" ng-model="l.weight" class="tb_input" /></td>
+            <td>
+                <select ng-model="l.weightUnit" class="tb_select">
+                    <option value="">请选择</option>
+                    <option value="K">KG 公斤</option>
+                    <option value="L">LB 磅</option>
+                </select>
+            </td>
+            <td><input type="text" ng-model="l.size" class="tb_input" /></td>
+            <td>
+                <select ng-model="l.sizeUnit" class="tb_select">
+                    <option value="">请选择</option>
+                    <option value="L">LCM 厘米</option>
+                    <option value="I">LI 英寸</option>
+                </select>
+            </td>
+            <td><input type="text" ng-model="l.subCode" class="tb_input" /></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="helper_margin_top5">
+        <div class="btn_page btn_add_small">
+            <div class="btn_left"></div>
+            <div class="btn_content add_line" >增加一行</div>
+            <div class="btn_right"></div>
+        </div>
+        <div class="btn_page btn_add_small_2">
+            <div class="btn_left"></div>
+            <div class="btn_content delete_line">删除一行</div>
+            <div class="btn_right"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

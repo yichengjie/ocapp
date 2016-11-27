@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>附加服务</title>
+    <link type="text/css" rel="stylesheet" href="/resources/tui/styles/tui_global.css"/>
+    <link type="text/css" rel="stylesheet" href="/resources/tui/styles/tui_content.css" />
+    <link type="text/css" rel="stylesheet" href="/resources/tui/components/tuiDialog/tui_dialog.css" />
+
+    <link type="text/css" rel="stylesheet" href="/resources/tui/components/tuiValidate/tui_validator.css" />
+    <link type="text/css" rel="stylesheet" href="/resources/tui/components/tuiDatepicker/jquery_ui.datepicker-modify.css" />
+    <link type="text/css" rel="stylesheet" href="/resources/oc/styles/jquery.ui.datepicker.css" />
+    <link type="text/css" rel="stylesheet" href="/resources/oc/styles/jquery-ui-timepicker-addon.css" />
+    <link type="text/css" rel="stylesheet" href="/resources/oc/styles/oc_style.css" />
+    <link type="text/css" rel="stylesheet" href="/resources/oc/styles/oc_row.css" />
+    <link type="text/css" rel="stylesheet" href="/resources/oc/components/iconfont/iconfont.css"/>
+
+    <style type="text/css">
+        [ng-cloak]{display:none !important;}
+        /*开发版本
+        input.ng-invalid {border: 1px solid red;}
+        input.ng-valid{border: 1px solid green;}*/
+        /*上线版本*/
+        .ng-pristine{}
+        .ng-dirty.ng-valid{/*border:1px solid Green;*/}
+        select.ng-dirty.ng-invalid,input.ng-dirty.ng-invalid{border:1px solid Red;}
+        .ng-dirty.ng-valid ~ span.ok{color:green; display:inline;}
+        .ng-dirty.ng-invalid ~ span.ko{color:red; display:inline;}
+    </style>
+</head>
+<body  ng-cloak>
+<input id="contextPath"  type="hidden" value='' />
+<div class="content" ng-controller="EditController">
+    <!-- -----------------------头部开始 ----------------------------------------->
+    <div class="main_box helper_padding_0">
+        <div class="header_control query_section">
+            <!-- title index -->
+            <div class="helper_float_left query_section_row edit_header">
+                <h1 class="helper_margin_right_10px">已发布运价验证</h1>
+            </div>
+            <!-- title index -->
+            <!-- 功能按钮start -->
+            <div class="helper_float_right operation_btnlist">
+                <div class="helper_float_left helper_margin_0_2px margin_top_5px" >
+                    <div class="btn_page btn_cancel">
+                        <div class="btn_left"></div>
+                        <div class="btn_content" id="back" ng-click="backPage($event)">返回</div>
+                        <div class="btn_right"></div>
+                    </div>
+                </div>
+                <div class="helper_float_left helper_margin_0_2px margin_top_5px">
+                    <div class="btn_page btn_cancel">
+                        <div class="btn_left"></div>
+                        <div class="btn_content" ng-click="resetPage($event)">清空</div>
+                        <div class="btn_right"></div>
+                    </div>
+                </div>
+                <div class="helper_float_left helper_margin_0_2px margin_top_5px">
+                    <div class="btn_page btn_save">
+                        <div class="btn_left"></div>
+                        <div class="btn_content" ng-click="submitPage($event)">验证请求</div>
+                        <div class="btn_right"></div>
+                    </div>
+                </div>
+                <span style="padding-right: 11px;"></span>
+                <div class="clearfix"></div>
+            </div>
+            <!-- 功能按钮end -->
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- -----------------------头部结束----------------------------------------->
+
+    <!-- -----------------------主内容编辑部分 start----------------------------------- -->
+    <div  class="main_box edit_main_box">
+        <div growl></div>
+        <form name="myForm" novalidate ng-submit="submitPage()" id ="myForm">
+            <!-- 整个验证请求block start -->
+            <div class="data_section markDiv block_edit_layout">
+                <div class="title_layout row">
+                    <div class="col-sm-1"><h2>验证请求</h2></div>
+                    <div class="col-sm-6">
+                        <span class="helper_color_blue_2 ">基础信息</span>
+                        <span class="helper_color_blue_2 ">&nbsp;|&nbsp;请求条件</span>
+                        <span class="helper_color_blue_2 ">&nbsp;|&nbsp;服务信息</span>
+                        <span class="helper_color_blue_2 ">&nbsp;|&nbsp;运价信息</span>
+                    </div>
+                </div>
+                <!-- 基础信息 start -->
+                <div class="row">
+                    <div class="col-sm-1">
+                        <h4>基础信息</h4>
+                    </div>
+                    <!-- 基础信息block start -->
+                    <div class="col-sm-10 block_edit2">
+                        <div class="row row_from" >
+                            <label class="col-sm-1_5 input_title"><span class="necessary"></span> <span>请求类型</span></label>
+                            <div class="col-sm-9">
+                                <select name="requestType"  ng-model="data.requestType" class="select_width" ng-required="true">
+                                    <option value="">选择</option>
+                                    <option value="TSKOC">普通服务</option>
+                                    <option value="C">逾重行李</option>
+                                    <option value="P">预付费行李</option>
+                                </select>
+                                <span ng-messages="myForm.requestType.$error" ng-if="myForm.requestType.$dirty">
+                                   <span class="errorInfo_validate" ng-message="required">必填字段。</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from" >
+                            <label class="col-sm-1_5 input_title"><span>销售日期</span></label>
+                            <div class="col-sm-9">
+                                <input name="salesDate" ng-model="data.salesDate"  type="text"  datetimepicker=""  readonly="readonly"  class="normal_input"/>
+                                <label  class ="datebox icon iconfont icon-riqi"></label>
+                            </div>
+                        </div>
+                        <div class="row row_from" >
+                            <label class="col-sm-1_5 input_title"><span class="necessary"></span><span>销售地</span></label>
+                            <div class="col-sm-9">
+                                <input name="pointOfSaleLocation" ng-model="data.pointOfSaleLocation" ng-required="true" threecode="" upper-input="" type="text"  placeholder="城市三字码" class="normal_input"  />
+                                <span ng-messages="myForm.pointOfSaleLocation.$error" 
+                                    ng-if="myForm.pointOfSaleLocation.$dirty">
+                                    <span class="errorInfo_validate" ng-message="required">必填字段。</span>
+                                    <span class="errorInfo_validate" ng-message="threecode">请输入正确的城市三字码。</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>发布对象</span></label>
+                            <div class="col-sm-9">
+                                <select name="publicObjectType" ng-model="data.publicObjectType"
+                                        ng-change="changePublicObjectType(data.publicObjectType)" class="select_width_lg">
+                                    <option value="">选择</option>
+                                    <option value="T">代理人office号</option>
+                                    <option value="I">IATA号</option>
+                                    <option value="X">Department/Identifier</option>
+                                    <option value="V">CRS/CXR Department Code</option>
+                                    <option value="E">ERSP No</option>
+                                    <option value="L">LNIATA Number (CRT Address)</option>
+                                    <option value="A">Airline specific codes</option>
+                                </select>
+                                <input name="publicObjectCode" ng-model="data.publicObjectCode" type="text" publicobj="{{data.publicObjectType}}"
+                                       ng-required="data.publicObjectType=='T'||data.publicObjectType=='I'"  class="two_input" placeholder="代码" />
+                                <span ng-messages="myForm.publicObjectCode.$error" ng-if="myForm.publicObjectCode.$dirty">
+                                    <span class="errorInfo_validate" ng-message="required">必填字段。</span>
+                                    <span class="errorInfo_validate" ng-message="length6"> 最大长度为8位。</span>
+                                    <span class="errorInfo_validate" ng-message="length8"> 最大长度为8位。</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 基础信息block end -->
+                </div>
+                <!-- 基础信息 end -->
+
+                <!-- 请求条件 start -->
+                <div class="row block_box">
+                    <div class="col-sm-1">
+                        <h4>请求条件</h4>
+                    </div>
+                    <!-- 请求条件block start -->
+                    <div class="col-sm-10 block_edit2">
+                        <div class="row row_from" >
+                            <label class="col-sm-1_5 input_title"><span class="necessary"></span><span>始发地代码</span></label>
+                            <div class="col-sm-9">
+                                <input name="departureAirportCode"  ng-model="data.departureAirportCode" ng-required="true" threecode="" upper-input="" class="normal_input" type="text" placeholder="机场三字码" />
+                                <span ng-messages="myForm.departureAirportCode.$error" ng-if="myForm.departureAirportCode.$dirty">
+                                   <span class="errorInfo_validate" ng-message="required">必填字段。</span>
+                                   <span class="errorInfo_validate" ng-message="threecode">请输入正确的机场三字码。</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span class="necessary"></span><span>目的地代码</span></label>
+                            <div class="col-sm-9">
+                                <input name="arrivalAirportCode" ng-model="data.arrivalAirportCode" ng-required="true" threecode="" upper-input="" class="normal_input" type="text" placeholder="机场三字码"  />
+                                <span ng-messages="myForm.arrivalAirportCode.$error" 
+                                        ng-if="myForm.arrivalAirportCode.$dirty">
+                                   <span class="errorInfo_validate" ng-message="required">必填字段。</span>
+                                   <span class="errorInfo_validate" ng-message="threecode">请输入正确的机场三字码。</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from" >
+                            <label class="col-sm-1_5 input_title"><span>起飞时间</span></label>
+                            <div class="col-sm-9">
+                                <input name="departureDateTime" ng-model="data.departureDateTime" datetimepicker="" class="normal_input" type="text" readonly="readonly"  />
+                                <label  class ="datebox icon iconfont icon-riqi"></label>
+                            </div>
+                        </div>
+                        <div class="row row_from">
+                            <label class="col-sm-1_5 input_title"><span>到达时间</span></label>
+                            <div class="col-sm-9">
+                                <input name="arrivalDateTime" ng-model="data.arrivalDateTime" datetimepicker="" class="normal_input" type="text" readonly="readonly"   />
+                                <label  class ="datebox icon iconfont icon-riqi"></label>
+                            </div>
+                        </div>
+                        <div class="row row_from" >
+                            <label class="col-sm-1_5 input_title">市场方RBD<span></span></label>
+                            <div class="col-sm-9">
+                                <input name="resBookDesigCode" ng-model="data.resBookDesigCode" type="text"  class="normal_input"/>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>市场方航班号</span></label>
+                            <div class="col-sm-9">
+                                <input name="flightNumber" ng-model="data.flightNumber" integer ="" ng-maxlength="3" class="normal_input"  type="text"  />
+                            	<span ng-messages="myForm.flightNumber.$error"
+                                      ng-if="myForm.flightNumber.$dirty">
+                                   <span class="errorInfo_validate" ng-message="integer">必须输入数字。</span>
+                                   <span class="errorInfo_validate" ng-message="maxlength">最多输入3位数字。</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from" >
+                            <label class="col-sm-1_5 input_title"><span class="necessary"></span><span>市场方航空公司</span></label>
+                            <div class="col-sm-9">
+                                <input name="marketingAirlineCode" ng-model="data.marketingAirlineCode" ng-required="true"
+                                    air="" upper-input="" class="normal_input"  type="text" />
+                                <span ng-messages="myForm.marketingAirlineCode.$error"
+                                        ng-if="myForm.marketingAirlineCode.$dirty">
+                                   <span class="errorInfo_validate" ng-message="required">必填字段。</span>
+                                   <span class="errorInfo_validate" ng-message="air">请输入正确的航空公司二字码</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>承运方RBD</span></label>
+                            <div class="col-sm-9">
+                                <input name="operatingCarrierRBD" ng-model="data.operatingCarrierRBD" type="text"  class="normal_input"  />
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>承运方航班号</span></label>
+                            <div class="col-sm-9">
+                                <input name="operatingFlightNumber" ng-model="data.operatingFlightNumber" integer ="" ng-maxlength="3" type="text" class="normal_input"  />
+                            	<span ng-messages="myForm.operatingFlightNumber.$error" ng-if="myForm.operatingFlightNumber.$dirty">
+                                   <span class="errorInfo_validate" ng-message="integer">必须输入数字。</span>
+                                   <span class="errorInfo_validate" ng-message="maxlength">最多输入3位数字。</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>承运方航空公司</span></label>
+                            <div class="col-sm-9">
+                                <input name="operatingAirlineCode" ng-model="data.operatingAirlineCode" air="" upper-input="" type="text" class="normal_input"  />
+                                <span ng-messages="myForm.operatingAirlineCode.$error" 
+                                        ng-if="myForm.operatingAirlineCode.$dirty">
+                                   <span class="errorInfo_validate" ng-message="air">请输入正确的航空公司二字码</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>机型</span></label>
+                            <div class="col-sm-9">
+                                <input name="equipmentCode" ng-model="data.equipmentCode" type="text" class="normal_input"  />
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>舱位等级</span></label>
+                            <div class="col-sm-9">
+                                <input name="cabin" ng-model="data.cabin" type="text" class="normal_input"  />
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>常旅客积分所在航司</span></label>
+                            <div class="col-sm-9">
+                                <input name="carrierCode" ng-model="data.carrierCode" air="" upper-input="" type="text"  class="normal_input" />
+                                <span ng-messages="myForm.carrierCode.$error" 
+                                        ng-if="myForm.carrierCode.$dirty">
+                                   <span class="errorInfo_validate" ng-message="air">请输入正确的航空公司二字码</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>常旅客等级</span></label>
+                            <div class="col-sm-9">
+                                <select name="frequentFlyerStatus" ng-model="data.frequentFlyerStatus" class="select_width">
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="l in frequentFlyerStatusList" value="{{l.value}}" >{{l.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>旅客类型</span></label>
+                            <div class="col-sm-9">
+                                <select name="passengerTypeCode" ng-model="data.passengerTypeCode" class="select_width">
+                                    <option value="">请选择</option>
+                                    <option ng-repeat="l in passengerTypeCodeList" value="{{l.value}}" >{{l.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- 请求条件block start -->
+                </div>
+                <!-- 请求条件 end -->
+
+                <!-- 服务信息 start -->
+                <div class="row block_box" ng-if="data.requestType==''||data.requestType=='TSKOC'">
+                    <div class="col-sm-1">
+                        <h4>服务信息</h4>
+                    </div>
+                    <!-- 服务信息 block start -->
+                    <div class="col-sm-10 block_edit2">
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span class="necessary"></span><span>服务子代码</span></label>
+                            <div class="col-sm-9">
+                                <input name="subCode" ng-model="data.subCode" type="text" ng-required="true" ng-maxlength="3" upper-input=""  class="normal_input"  placeholder="三字码" />
+                                <span ng-messages="myForm.subCode.$error" 
+                                        ng-if="myForm.subCode.$dirty">
+                                   <span class="errorInfo_validate" ng-message="required">必填字段。</span>
+                                   <span class="errorInfo_validate" ng-message="maxlength">最多输入如3位</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>货币种类</span></label>
+                            <div class="col-sm-9">
+                                <input name="currencyCode" ng-model="data.currencyCode" type="text"  class="normal_input" placeholder="eg:CNY" />
+                            </div>
+                        </div>
+                        <div class="row row_from">
+                            <label class="col-sm-1_5 input_title"><span>提前订座</span></label>
+                            <div class="col-sm-9">
+                                <input name="seatCharacteristics"  ng-model="data.seatCharacteristics" type="text" class="normal_input" placeholder="多个座位属性请用/分割" />
+                            </div>
+                        </div>
+                        <div class="row row_from">
+                            <label class="col-sm-1_5 input_title"><span>升舱到</span></label>
+                            <div class="col-sm-9">
+                                <show-hide-table tbname="listUpgradeInfo"></show-hide-table>
+                                <div class = "table_layout" style="width:417px;" ng-show="showHideStatus.listUpgradeInfo">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>市场方RBD</th>
+                                            <th>承运方RBD</th>
+                                            <th>市场方服务等级</th>
+                                            <th>承运方服务等级</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="l in data.listUpgradeInfo" ng-click="selectTr($event)" ng-form="upgradeInfoForm">
+                                            <td>
+                                                <input name="{{'listUpgradeInfo1'+$index}}"  ng-model="l.mcRbd"   type="text" class="required tb_input" />
+                                            </td>
+                                            <td><input name="{{'listUpgradeInfo2'+$index}}" type="text" ng-model="l.ocRbd" class="tb_input"/></td>
+                                            <td><input name="{{'listUpgradeInfo3'+$index}}" type="text" ng-model="l.mcCabin" class="tb_input"/></td>
+                                            <td><input name="{{'listUpgradeInfo4'+$index}}" type="text" ng-model="l.ocCabin" class="tb_input"/></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <add-delete list = "data.listUpgradeInfo" tbname="listUpgradeInfo"></add-delete>
+                                </div>
+                                <!--
+                                <table-info tbname="listUpgradeInfo" list ="data.listUpgradeInfo"></table-info>
+                                -->
+                            </div>
+                        </div>
+                        <div class="row row_from">
+                            <label class="col-sm-1_5 input_title">通用券</label>
+                            <div class="col-sm-9">
+                                <show-hide-table tbname="listGeneralTicketInfo"></show-hide-table>
+                                <div class = "table_layout" style="width:215px;" ng-show="showHideStatus.listGeneralTicketInfo">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>套数</th>
+                                            <th>使用人数</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ng-repeat="l in data.listGeneralTicketInfo" ng-click="selectTr($event)">
+                                            <td><input name ="{{'listGeneralTicketInfo1'+$index}}" type="text" ng-model="l.totalTicketNumber" class="tb_input nonNegativeInteger" /></td>
+                                            <td><input name="{{'listGeneralTicketInfo2'+$index}}" type="text" ng-model="l.passengerNumber" class="tb_input nonNegativeInteger" /></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <add-delete list = "data.listGeneralTicketInfo" tbname="listGeneralTicketInfo"></add-delete>
+                                </div>
+                                <!--
+                                <table-info tbname="listGeneralTicketInfo" list ="data.listGeneralTicketInfo"></table-info>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 服务信息 block end -->
+                </div>
+                <!-- 服务信息 end -->
+
+                <!-- 服务信息 start -->
+                <div class="row block_box" ng-if="data.requestType=='C'||data.requestType=='P'">
+                    <div class="col-sm-1">
+                        <h4>服务信息</h4>
+                    </div>
+                    <!-- 服务信息 block start -->
+                    <div class="col-sm-10 block_edit2">
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>货币种类</span></label>
+                            <div class="col-sm-9">
+                                <input name="currencyCode" ng-model="data.currencyCode" type="text"  class="normal_input" />
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>CRS/ICS</span></label>
+                            <div class="col-sm-9">
+                                <input name="syscode" ng-model="data.syscode" type="text"   class="normal_input"/>
+                                <span class="gray marginLeft15"><i class="icon iconfont"></i>按公布运价百分比计算时，请务必填写</span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>渠道</span></label>
+                            <div class="col-sm-9">
+                                <input name="channelID" ng-model="data.channelID" type="text"  class="normal_input" />
+                                <span class="gray marginLeft15"><i class="icon iconfont"></i>按公布运价百分比计算时，请务必填写</span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>office号</span></label>
+                            <div class="col-sm-9">
+                                <input name="officeID" ng-model="data.officeID" type="text"  class="normal_input" />
+                                <i class="marginLeft15 icon iconfont"></i>
+                                <span class="gray">按公布运价百分比计算时，请务必填写</span>
+                            </div>
+                        </div>
+                        <div class="row row_from">
+                            <label class="col-sm-1_5 input_title">免费行李</label>
+                            <div class="col-sm-9">
+                                <!--
+                                <link-table tbname="listFreeInformation" list="data.listFreeInformation"></link-table>
+                                <span class="marginRL15 text-muted">将覆盖原免费行李额配置</span><br/>
+                                <table-info tbname="listFreeInformation" list ="data.listFreeInformation"></table-info>
+                                <label>免费行李额</label>
+                                -->
+                                <a href="javascript:void(0)">
+                                    <span ng-show="showHideFreeBaggageFlag" ng-click="showHideFreeBaggage()">取消自定义</span>
+                                    <span ng-show="!showHideFreeBaggageFlag" ng-click="showHideFreeBaggage()">自定义</span>
+                                </a>
+                                <span class="gray marginLeft15"> <i class="icon iconfont icon-jinggao"></i>将覆盖原免费行李额配置</span><br/>
+                                <span ng-show="showHideFreeBaggageFlag">
+                                    <label>免费行李额&nbsp;&nbsp;</label>
+                                    <input name="freeAmount" ng-model="data.freeAmount" class="two_input nonNegativeInteger"  type="text" />
+                                    <select name="freeUnit" ng-model="data.freeUnit" class="two_input" ng-required="data.freeAmount!=''">
+                                        <option value="">请选择</option>
+                                        <option value="P">件</option>
+                                        <option value="K">公斤</option>
+                                        <option value="L">磅</option>
+                                    </select>
+                                </span>
+                                <span ng-show="myForm.freeUnit.$dirty && myForm.freeUnit.$invalid">
+                                   <span class="errorInfo_validate" ng-show="myForm.freeUnit.$error.required">
+                                       必填字段。
+                                   </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row row_from">
+                            <label class="col-sm-1_5 input_title">收费行李</label>
+                            <div class="col-sm-9">
+                                <show-hide-table tbname="listBaggages"></show-hide-table>
+                                <div class = "table_layout" style="width:517px;" ng-show="showHideStatus.listBaggages">
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>行李重量</th>
+                                            <th>重量单位</th>
+                                            <th>行李尺寸</th>
+                                            <th>尺寸单位</th>
+                                            <th>行李子代码</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <!--[weight,weightUnit,size,sizeUnit,subCode]-->
+                                        <tr ng-repeat="l in data.listBaggages" ng-click="selectTr($event)">
+                                            <td><input name="{{'listBaggages1'+$index}}" type="text" ng-model="l.weight" class="tb_input nonNegativeInteger" /></td>
+                                            <td>
+                                                <select name="{{'listBaggages2'+$index}}" ng-model="l.weightUnit" class="tb_select">
+                                                    <option value="">请选择</option>
+                                                    <option value="K">KG 公斤</option>
+                                                    <option value="L">LB 磅</option>
+                                                </select>
+                                            </td>
+                                            <td><input name="{{'listBaggages3'+$index}}" type="text" ng-model="l.size" class="tb_input nonNegativeInteger" /></td>
+                                            <td>
+                                                <select name="{{'listBaggages4'+$index}}" ng-model="l.sizeUnit" class="tb_select">
+                                                    <option value="">请选择</option>
+                                                    <option value="L">LCM 厘米</option>
+                                                    <option value="I">LI 英寸</option>
+                                                </select>
+                                            </td>
+                                            <td><input name="{{'listBaggages5'+$index}}" type="text" ng-model="l.subCode" class="tb_input" /></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <add-delete tbname="listBaggages" list ="data.listBaggages"></add-delete>
+                                </div>
+                                <!--
+                                <table-info tbname="listBaggages" list ="data.listBaggages"></table-info>
+                                -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 服务信息 block end -->
+                </div>
+                <!-- 服务信息 end -->
+
+                <!-- 运价信息 start -->
+                <div class="row block_box">
+                    <div class="col-sm-1">
+                        <h4>运价信息</h4>
+                    </div>
+                    <!-- 运价信息 block start -->
+                    <div class="col-sm-10 block_edit2">
+                        <div class="row">
+                            <div class="col-sm-1_5"></div>
+                            <div class="col-sm-9">
+                                <span class="gray"> <i class="icon iconfont icon-jinggao"></i>注：若是美加航线，请务必填写下方字段信息！</span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>运价基础</span></label>
+                            <div class="col-sm-9">
+                                <input name="fareReference" ng-model="data.fareReference" type="text"  class="normal_input" />
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>运价报备所在航司</span></label>
+                            <div class="col-sm-9">
+                                <input name="filingAirlineCode" ng-model="data.filingAirlineCode" air="" upper-input="" type="text"   class="normal_input"/>
+                                <span ng-messages="myForm.filingAirlineCode.$error" 
+                                        ng-if="myForm.filingAirlineCode.$dirty">
+                                   <span class="errorInfo_validate" ng-message="air">请输入正确的航空公司二字码。</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>始发地</span></label>
+                            <div class="col-sm-9">
+                                <input name="departureAirportCode2" ng-model="data.departureAirportCode2" type="text"  class="normal_input" />
+                            </div>
+                        </div>
+                        <div class="row row_from"  >
+                            <label class="col-sm-1_5 input_title"><span>目的地</span></label>
+                            <div class="col-sm-9">
+                                <input name="arrivalAirportCode2"  ng-model="data.arrivalAirportCode2" type="text"  class="normal_input" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 运价信息 block end -->
+                </div>
+                <!-- 运价信息 end -->
+
+            </div>
+            <!-- 整个验证请求block start -->
+        </form>
+    </div>
+    <!-- -----------------------主内容编辑部分 end  ----------------------------------- -->
+    <div style="height:50px;" ng-show="validateResultData.back"></div>
+    <!-- 验证结果start -->
+    <div  class="xmlResponseLayout" ng-show="validateResultData.back">
+        <div class="responseLayout">
+            <h1>验证结果</h1>
+            <span ng-show="validateResultData.multiDataFlag" class="multipleStat">
+                <span>&nbsp;&nbsp;总额</span><span class="bold red font14">{{validateResultData.multiData.all.charge}}</span><span class="bold">{{validateResultData.multiData.all.chargeUnit}}</span>
+                <a href="javascript:void(0)" class="responseLink responseLinkTop" ng-show="!validateResultData.showDetailPanelFlag"  ng-click="showValidateResultDetail()">明细</a>
+                <a href="javascript:void(0)" class="responseLink responseLinkBottom" ng-show="validateResultData.showDetailPanelFlag" ng-click="showValidateResultDetail()">收起</a>
+            </span>
+            <span class="singleStat" ng-show="validateResultData.singleDataFlag">
+                <span class="bold red font14">{{validateResultData.singleData.charge}}</span><span class="bold">{{validateResultData.singleData.chargeUnit}}</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;序列号</span><span class="bold font14">{{validateResultData.singleData.sequence}}</span>
+            </span>
+            <span class="copyXML"  data-zclip-text="{{validateResultData.requestXML}}"> <i class="icon iconfont icon-fuzhi text-info"></i>复制请求XML</span>
+            <div class="clear"></div>
+        </div>
+        <div class="moreStatInfoLayout" ng-show="validateResultData.showDetailPanelFlag">
+            <table>
+                <tbody>
+                    <tr ng-repeat="l in validateResultData.multiData.list">
+                        <td>{{$index}}</td>
+                        <td>{{l.subCode}}</td>
+                        <td><span class="bold red font14">{{l.charge}}</span><span>{{l.chargeUnit}}</span></td>
+                        <td>{{l.sequence}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 验证结果end -->
+</div><!--end of content-->
+
+
+<script type="text/javascript" src="/resources/tui/scripts/jquery.js"></script>
+<script type="text/javascript" src="/resources/oc/components/zero-clipboard/jquery.zeroclipboard.js"></script>
+<script type="text/javascript" src="/resources/oc/scripts/sea-modules/jquery/validate/jquery.metadata.js"></script>
+<script type="text/javascript" src="/resources/oc/scripts/sea-modules/jquery/validate/jquery.validate.js"></script>
+<script type="text/javascript" src="/resources/oc/scripts/sea-modules/jquery/validate/messages_zh.js"></script>
+<script type="text/javascript" src="/resources/oc/scripts/sea-modules/jquery/validate/additional-methods.js"></script>
+<script type="text/javascript" src="/resources/oc/scripts/sea-modules/angular/angularjs/1.4.3/angular.js"></script>
+<script type="text/javascript" src="/resources/oc/scripts/sea-modules/angular/growl/angular-growl.js"></script>
+<script type="text/javascript" src="/resources/oc/scripts/sea-modules/angular/messages/angular-messages.js"></script>
+<script type="text/javascript" src="/resources/oc/components/moment/moment.js"></script>
+<script src="/resources/oc/scripts/sea-modules/seajs/seajs/2.1.1/sea.js"></script>
+<script src="/resources/oc/scripts/config/validate.js"></script>
+</body>
+</html>

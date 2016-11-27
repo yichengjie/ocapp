@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>测试ng-attr</title>
+	<meta charset="UTF-8">
+	<link type="text/css" rel="stylesheet" href="../components/bootstrap/dist/css/bootstrap.css">
+	<link type="text/css" rel="stylesheet" href="../stylesheets/style.css">
+	<link type="text/css" rel="stylesheet" href="../stylesheets/iconfont/iconfont.css">
+</head>
+<body ng-app="app">
+	<div ng-controller="IndexController">
+		<div ng-show="showFlag">
+			<span class="isloading-wrapper wrapper ">loading...<i class="text-success icon-refresh icon iconfont icon-spin"></i></span>
+		</div>
+		<br>
+		<button class="btn btn-primary" ng-click="showHideFn()">toggle</button>
+	</div>
+<script type="text/javascript" src="../components/angular/angular.js"></script>
+<script type="text/javascript">
+	(function test(){
+		var app = angular.module('app',[]) ;
+		app.controller('IndexController', function ($scope) {
+			$scope.name = 'yicj' ;
+			$scope.showFlag = true ;
+			$scope.showHideFn = function(){
+				$scope.showFlag = !$scope.showFlag ;
+			}
+		}) ;
+	}()) ;
+</script>
+</body>
+</html>

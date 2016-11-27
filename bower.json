@@ -1,0 +1,35 @@
+{
+  "name": "ocapp",
+  "description": "",
+  "main": "",
+  "authors": [
+    "yichengjie <626659321@qq.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "ocmoni"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "angular": "~1.5.0",
+    "select2": "~4.0.2",
+    "moment": "~2.12.0",
+    "vue": "^1.0.20",
+    "zeroclipboard": "^2.2.0",
+    "clipboard": "^1.5.9",
+    "is-loading": "^1.0.6",
+    "ckeditor": "^4.5.8"
+  },
+  "devDependencies": {
+    "angular-messages": "~1.5.0"
+  }
+}

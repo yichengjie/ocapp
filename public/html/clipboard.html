@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+
+
+</head>
+<body>
+<!-- Trigger -->
+<button class="btn" data-clipboard-text="Just because you can doesn't mean you should — clipboard.js">
+    Copy to clipboard
+</button>
+
+<script type="text/javascript" src="../components/jquery/dist/jquery.js"></script>
+<script type="text/javascript" src="../components/clipboard/dist/clipboard.js"></script>
+<script type="text/javascript">
+    
+    $(function () {
+        var clipboard = new Clipboard('.btn');
+        clipboard.on('success', function(e) {
+            console.info('Action:', e.action);
+            console.info('Text:', e.text);
+            console.info('Trigger:', e.trigger);
+            e.clearSelection();
+        });
+        clipboard.on('error', function(e) {
+            console.error('Action:', e.action);
+            console.error('Trigger:', e.trigger);
+        });
+    }) ;
+</script>
+</body>
+</html>

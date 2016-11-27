@@ -1,0 +1,39 @@
+<div class = "table_layout" style="width:417px;" ng-show="showHideStatus.listUpgradeInfo">
+<table>
+    <thead>
+    <tr>
+        <th>市场方RBD</th>
+        <th>承运方RBD</th>
+        <th>市场方服务等级</th>
+        <th>承运方服务等级</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--[McRbd,OcRbd,McCabin,OcCabin]-->
+    <tr ng-repeat="l in list" ng-click="selectTr($event)" ng-form="upgradeInfoForm">
+        <td style="position: relative">
+            <input name="mcRbd"  ng-model="l.mcRbd" required="" type="text" class="tb_input" />
+             <span ng-show="upgradeInfoForm.name1.$dirty && upgradeInfoForm.name1.$invalid">
+               <span class="errorInfo_validate_td" ng-show="upgradeInfoForm.name1.$error.required">必填字段。</span>
+            </span>
+        </td>
+        <td><input type="text" ng-model="l.ocRbd" class="tb_input"/></td>
+        <td><input type="text" ng-model="l.mcCabin" class="tb_input"/></td>
+        <td><input type="text" ng-model="l.ocCabin" class="tb_input"/></td>
+    </tr>
+    </tbody>
+</table>
+<div class="helper_margin_top5">
+    <div class="btn_page btn_add_small">
+        <div class="btn_left"></div>
+        <div class="btn_content add_line" >增加一行</div>
+        <div class="btn_right"></div>
+    </div>
+    <div class="btn_page btn_add_small_2">
+        <div class="btn_left"></div>
+        <div class="btn_content delete_line">删除一行</div>
+        <div class="btn_right"></div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+</div>
